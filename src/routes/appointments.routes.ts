@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { startOfHour, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
@@ -13,16 +13,23 @@ appointmentsRouter.get('/', (request, response) => {
   response.json(appointments);
 });
 appointmentsRouter.post('/', (request, response) => {
-  const { provider, date } = request.body;
+  try {
+    const { provider, date } = request.body;
 
-  const parsedDate = parseISO(date);
+    const parsedDate = parseISO(date);
 
-  const createAppointment = new CreateAppointmentService(
-    appointmentsRepository,
-  );
+    const createAppointment = new CreateAppointmentService(
+      appointmentsRepository,
+    );
 
-  const appointment = createAppointment.execute({ date: parsedDate, provider });
-  return response.json(appointment);
+    const appointment = createAppointment.execute({
+      date: parsedDate,
+      provider,
+    });
+    return response.json(appointment);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
 });
 
 export default appointmentsRouter;
