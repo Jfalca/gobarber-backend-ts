@@ -11,3 +11,9 @@ services:
     ports:
       - "5432:5432"
 
+   mongo:
+    image: 'mongo'
+    restart: always
+    ports:
+      - '27017:27017'
+
