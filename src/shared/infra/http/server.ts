@@ -31,11 +31,10 @@ app.use(
       });
     }
 
-    return err; // em dev
-    // return response.status(500).json({
-    //   status: 'error',
-    //   message: 'Internal server error',
-    // });
+    return response.status(500).json({
+      status: 'error',
+      message: 'Internal server error',
+    });
   },
 );
 
