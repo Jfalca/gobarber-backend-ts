@@ -9,3 +9,4 @@ tmp/*
 !tmp/.gitkeep
 .env
 ormconfig.json
+notas.json
